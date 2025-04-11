@@ -2,10 +2,12 @@ import express from 'express';
 import mongoose from 'mongoose';
 import routes from './routes.js';
 import 'dotenv/config';
+import { authMiddleware } from './middleware/authMiddleware.js';
 
 const app = express();
 
 app.use(express.json());
+app.use(authMiddleware);
 app.use(routes);
 
 const url = process.env.MONGO_URI || "mongodb://localhost:27017";

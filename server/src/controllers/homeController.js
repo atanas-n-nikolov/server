@@ -2,13 +2,13 @@ import { Router } from "express";
 import Planets from '../models/Planets.js';
 import Facts from '../models/Facts.js';
 import Quiz from "../models/Quiz.js";
-import getError from './utils/getError.js';
+import getError from '../utils/getError.js';
 
 const homeController = Router();
 
 homeController.get('/', async (req, res) => {
     const today = new Date();
-    const dateString = today.toLocaleDateString('bg-BG');
+    const dateString = today.toLocaleDateString('bg-BG', { day: '2-digit', month: '2-digit' });
     try {
         let planets = await Planets.find();
         let latestQuiz = await Quiz.findOne().sort({ createdAt: -1 }).limit(1);

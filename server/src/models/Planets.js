@@ -35,6 +35,10 @@ const planetSchema = new Schema({
     minLenght: [10, 'Planet description should be at least 10 characters long.'],
     required: [true, 'Planet description is required.'],
   },
+  order: {
+    type: Number,
+    required: [true, 'Planet order is required.'],
+  },
   comments: [
     {
       _id: { type: Types.ObjectId, default: () => new Types.ObjectId() },
@@ -46,6 +50,8 @@ const planetSchema = new Schema({
   ],
   ownerId: { type: Types.ObjectId, ref: 'User' },
 });
+
+planetSchema.index({ order: 1 });
 
 const Planets = model('Planets', planetSchema);
 

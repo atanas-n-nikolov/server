@@ -27,7 +27,7 @@ const userSchema = new Schema({
     unique: true
   },
   score: { 
-    ype: Number,
+    type: Number,
     default: 0
   },
   password: {
