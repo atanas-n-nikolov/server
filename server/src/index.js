@@ -1,13 +1,16 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import routes from './routes.js';
+import 'dotenv/config';
 
 const app = express();
 
 app.use(express.json());
+app.use(routes);
 
-const url = "mongodb://localhost:27017";
+const url = process.env.MONGO_URI || "mongodb://localhost:27017";
 
-mongoose.connect(url, { dbName: 'Solar-System' })
+mongoose.connect(url, { dbName: 'Planets' })
   .then(() => console.log('DB Connected!'))
   .catch((err) => console.log(`DB failed: ${err}`));
 
