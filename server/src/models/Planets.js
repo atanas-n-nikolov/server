@@ -47,6 +47,6 @@ const planetSchema = new Schema({
   ownerId: { type: Types.ObjectId, ref: 'User' },
 });
 
-const Planet = model('Planet', planetSchema);
+const Planets = model('Planets', planetSchema);
 
-export default Planet;
+export default Planets;
