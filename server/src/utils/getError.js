@@ -1,29 +1,39 @@
-export default function getError(error) {
+import i18next from '../i18n.js';
+
+export default async function getError(error) {
+    if (error.statusCode) {
+        return {
+            message: error.message || i18next.t('unexpectedError'),
+            statusCode: error.statusCode,
+        };
+    }
+
     switch (error.name) {
         case 'ValidationError':
             return {
-                message: Object.values(error.errors)[0]?.message || 'Validation error',
+                message: Object.values(error.errors)[0]?.message || i18next.t('validationError'),
                 statusCode: 400,
             };
         case 'CastError':
             return {
-                message: 'Invalid data format. Please check your input.',
+                message: i18next.t('invalidDataFormat'),
                 statusCode: 400,
             };
         case 'MongoError':
             return {
-                message: 'Database error. Please try again later.',
+                message: i18next.t('databaseError'),
                 statusCode: 500,
             };
         case 'NotFound':
             return {
-                message: 'Resource not found.',
+                message: i18next.t('resourceNotFound'),
                 statusCode: 404,
             };
         default:
             return {
-                message: error.message || 'An unexpected error occurred.',
+                message: error.message || i18next.t('unexpectedError'),
                 statusCode: 500,
             };
-    };
-};
+    }
+}
+

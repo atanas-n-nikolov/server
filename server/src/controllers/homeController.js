@@ -2,27 +2,23 @@ import { Router } from "express";
 import Planets from '../models/Planets.js';
 import Facts from '../models/Facts.js';
 import Quiz from "../models/Quiz.js";
-import getError from '../utils/getError.js';
+import asyncHandler from "../utils/asyncHandler.js";
 
 const homeController = Router();
 
-homeController.get('/', async (req, res) => {
+homeController.get('/', asyncHandler(async (req, res) => {
     const today = new Date();
     const dateString = today.toLocaleDateString('bg-BG', { day: '2-digit', month: '2-digit' });
-    try {
-        let planets = await Planets.find();
-        let latestQuiz = await Quiz.findOne().sort({ createdAt: -1 }).limit(1);
-        let fact = await Facts.findOne({ date: dateString });
 
-        if (!planets) planets = [];
-        if (!latestQuiz) latestQuiz = [];
-        if (!fact) fact = [];
+    const planets = await Planets.find();
+    const latestQuiz = await Quiz.findOne().sort({ createdAt: -1 }).limit(1);
+    const fact = await Facts.findOne({ date: dateString });
 
-        res.status(200).json({ fact, planets, latestQuiz });
-    } catch (error) {
-        const { message, statusCode } = getError(error);
-        res.status(statusCode).json({ error: message }); 
-    };
-});
+    return res.status(200).json({
+        fact: fact || [],
+        planets,
+        latestQuiz: latestQuiz || []
+    });
+}));
 
 export default homeController;

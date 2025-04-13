@@ -44,6 +44,8 @@ const quizSchema = new Schema({
   timestamps: true,
 });
 
+quizSchema.index({ category: 1});
+
 const Quiz = model('Quiz', quizSchema, 'questions');
 
 export default Quiz;

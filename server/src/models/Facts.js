@@ -31,6 +31,8 @@ const dayFactsSchema = new Schema({
   },
 });
 
+dayFactsSchema.index({ date: 1 });
+
 const Facts = model('Facts', dayFactsSchema);
 
 export default Facts;
