@@ -14,8 +14,7 @@ const userService = {
             throw new Error(i18next.t('passwordMismatch'));
         }
     
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = await User.create({ firstName, lastName, email, password: hashedPassword });
+        const newUser = await User.create({ firstName, lastName, email, password });
     
         return generateResponse(newUser);
     },

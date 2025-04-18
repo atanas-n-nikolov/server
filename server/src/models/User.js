@@ -34,8 +34,8 @@ const userSchema = new Schema({
     type: String,
     required: [true, 'Password is required.'],
     match: [
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      'Password must be at least 8 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character.',
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d])(.{8,})$/,
+      'Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.',
     ],
   },
   answers: [answerSchema],

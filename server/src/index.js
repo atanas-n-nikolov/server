@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import routes from './routes.js';
+import cors from 'cors';
 import 'dotenv/config';
 import cookieParser from 'cookie-parser';
 import i18next from './i18n.js';
@@ -11,6 +12,14 @@ import getError from './utils/getError.js';
 const app = express();
 
 app.use(express.json());
+
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
+
 app.use(cookieParser());
 
 app.use(i18nextMiddleware.handle(i18next))
